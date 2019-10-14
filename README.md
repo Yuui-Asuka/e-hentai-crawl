@@ -1,5 +1,5 @@
 # e-hentai-crawl
-a crawl to catch comic in e-hentai.
+a crawl to catch comic on e-hentai.
 
 #requirements
 python 3.6
