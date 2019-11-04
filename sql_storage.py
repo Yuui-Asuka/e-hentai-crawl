@@ -23,7 +23,7 @@ class MySql:
             database = 'CREATE DATABASE Exhentai DEFAULT CHARACTER SET utf8'
             cursor.execute(database)
         db.close()
-
+    
     def insert_data(self):
         host, user, password, port = (self.host, self.user, self.password, self.port)
         db = pymysql.connect(host=host, user=user, password=password,
@@ -67,7 +67,7 @@ class MySql:
         db.close()
 
 if __name__ == '__main__':
-    mysql = MySql(host='localhost',user='root',password='123456',port=3306)
+    mysql = MySql(host='localhost',user='root',password='123456',port=3306) #初始的默认参数
     mysql.insert_data()
 
 
