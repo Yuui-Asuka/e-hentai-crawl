@@ -52,7 +52,8 @@ class Exhentai():
         for key,value in name_dict.items():
             print('{} {}'.format(key,value))
         return url_dict,name_dict
-
+    
+    #获取所有漫画的地址
     def get_manga_urls(self,page):
         if page < 1:
             page = 1
@@ -65,7 +66,8 @@ class Exhentai():
         url_dict,name_dict = self.get_url_info(soup)
         self.write_url_to_file(url_dict,name_dict)
         time.sleep(random.random())
-
+    
+    #将url写入到文件当中
     def write_url_to_file(self,url,name):
         if self.params['f_cats'] is not None:
             self.file_name = self.category + '.csv'
@@ -85,7 +87,8 @@ class Exhentai():
             self.lock.acquire()
             url_df.to_csv(self.file_name)
             self.lock.release()
-
+           
+    #从文件中读取url
     def read_url_from_file(self,process_id):
         if os.path.exists(self.url_file):
             self.lock.acquire()
@@ -100,7 +103,8 @@ class Exhentai():
             return this_url
         else:
             return None
-
+    
+    #搜索模式，可以输入想要查找的漫画名称。
     def search_keywords(self):
         while True:
             keyword = input("请输入你想搜索的漫画的关键字,包括漫画名、漫画语言、标签等：")
@@ -123,6 +127,7 @@ class Exhentai():
             number = 0
         return url_dict[number]
 
+    # 获取每个漫画的信息
     def get_pictures(self,process_id):
         picture_list = []
         if process_id is None:
@@ -157,6 +162,7 @@ class Exhentai():
                 'language':manga_language,'date':manga_date, 'size':manga_size,
                 'length':str(manga_length)+'pages','urls': picture_list}
 
+    # 获取单张图片的内容
     def get_one_picture(self,url):
         try:
             response = requests.get(url,headers = self.headers)
@@ -171,7 +177,8 @@ class Exhentai():
                 return response.status_code
         except requests.ConnectionError as e:
             return e.args
-
+    
+    # 获取图片内容以及写入文件
     def get_picture_contents(self,process_id):
         info = self.get_pictures(process_id)
         if not os.path.exists('exmanga'):
